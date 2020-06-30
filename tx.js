@@ -16,6 +16,7 @@ tx.size()                                                       // get total num
 tx.clone(<bsv.Transaction object>)                              // Clone a transaction ('genesis': 1)
 *************************************************************************************/
 class Tx {
+  endpoint;
   constructor(wallet) {
     if (wallet.id) {
       let dbpath = path.resolve(wallet.meta.storage.path, "db/" + wallet.id)
@@ -78,7 +79,7 @@ class Tx {
         } else {
           console.log('pushing', raw)
           try {
-            let res = await axios.post('https://api.whatsonchain.com/v1/bsv/main/tx/raw', { txhex: raw })
+            let res = await axios.post(process.env["NODE_ADDRESS_PUSH"] || 'https://api.whatsonchain.com/v1/bsv/main/tx/raw', { txhex: raw })
             console.log("Updating to sent:", item.id)
             // Change to sent
             this.DB.prepare("UPDATE tx SET sent=1 WHERE id=?").run(item.id)
