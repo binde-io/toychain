@@ -15,6 +15,8 @@ tx.reset()                                                      // clear all txs
 tx.size()                                                       // get total number of items on the table
 tx.clone(<bsv.Transaction object>)                              // Clone a transaction ('genesis': 1)
 *************************************************************************************/
+const push_addr = process.env["NODE_ADDRESS_PUSH"] || 'https://api.whatsonchain.com/v1/bsv/main/tx/raw';
+
 class Tx {
   endpoint;
   constructor(wallet) {
@@ -79,8 +81,8 @@ class Tx {
         } else {
           console.log('pushing', raw)
           try {
-            let res = await axios.post(process.env["NODE_ADDRESS_PUSH"] || 'https://api.whatsonchain.com/v1/bsv/main/tx/raw', { txhex: raw })
-            console.log("Updating to sent:", item.id)
+            let res = await axios.post(push_addr, { txhex: raw })
+            console.log(`Push addr: ${push_addr}.  Updating to sent: ${item.id}`)
             // Change to sent
             this.DB.prepare("UPDATE tx SET sent=1 WHERE id=?").run(item.id)
             counter++;
