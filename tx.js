@@ -82,7 +82,7 @@ class Tx {
         } else {
           console.log('pushing', raw)
           try {
-            let res = await axios.post(push_addr, JSON.parse(`{ ${tx_key}: raw }`))
+            let res = await axios.post(push_addr, JSON.parse(`{ "${tx_key}": "${raw}" }`))
             console.log(`Push addr: ${push_addr}.  Updating to sent: ${item.id}`)
             // Change to sent
             this.DB.prepare("UPDATE tx SET sent=1 WHERE id=?").run(item.id)
