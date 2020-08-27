@@ -16,7 +16,7 @@ tx.size()                                                       // get total num
 tx.clone(<bsv.Transaction object>)                              // Clone a transaction ('genesis': 1)
 *************************************************************************************/
 const push_addr = process.env["NODE_ADDRESS_PUSH"] || 'https://api.whatsonchain.com/v1/bsv/main/tx/raw';
-const tx_key = process.env["NODE_ADDRESS_PUSH"] ? "rawtx": "txhex"  // mapi vs. insight
+const tx_key = !!process.env["NODE_ADDRESS_PUSH"] ? "rawtx": "txhex"  // mapi vs. insight
 
 class Tx {
   endpoint;
@@ -82,7 +82,7 @@ class Tx {
         } else {
           console.log('pushing', raw)
           try {
-            let res = await axios.post(push_addr, JSON.parse(`{ "${tx_key}": "${raw}" }`))
+            let res = await axios.post(push_addr, JSON.parse(`{ "${tx_key}": "${raw}" }`), {'Content-Type': 'application/json'})
             console.log(`Push addr: ${push_addr}.  Updating to sent: ${item.id}`)
             // Change to sent
             this.DB.prepare("UPDATE tx SET sent=1 WHERE id=?").run(item.id)
