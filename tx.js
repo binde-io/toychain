@@ -90,7 +90,7 @@ class Tx {
           } catch (e) {
             console.log("Error", e)
             console.log("Sent", counter)
-            process.exit();
+            //process.exit();
           }
         }
       }
