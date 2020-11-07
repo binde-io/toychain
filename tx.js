@@ -80,7 +80,7 @@ class Tx {
         if (o && o.except && o.except.includes(item.id)) {
           console.log("already sent", item.id)
         } else {
-          console.log('pushing', raw)
+          console.log('pushing', raw.slice(0,30)+ "...")
           try {
             let res = await axios.post(push_addr, JSON.parse(`{ "${tx_key}": "${raw}" }`), {headers:{'Content-Type': 'application/json'}})
             console.log(`Push addr: ${push_addr}.  Updating to sent: ${item.id}`)
