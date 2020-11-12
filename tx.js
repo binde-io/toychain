@@ -82,6 +82,7 @@ class Tx {
         } else {
           console.log('pushing', raw.slice(0,30)+ "...")
           try {
+            console.log("is it printing?")
             let res = await axios.post(push_addr, JSON.parse(`{ "${tx_key}": "${raw}" }`), {headers:{'Content-Type': 'application/json'}})
             console.log(`Push addr: ${push_addr}.\n    Response: ${JSON.stringify(res.data)} \n    Updating to sent: ${item.id}`)
             // Change to sent
