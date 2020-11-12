@@ -89,6 +89,7 @@ class Tx {
             counter++;
           } catch (e) {
             console.log("Error", e)
+            console.log(Object.keys(e))
             console.log("Toychain: Error. Sent", counter)
             throw(e);
             //process.exit();
