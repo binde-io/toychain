@@ -81,9 +81,11 @@ class Tx {
           console.log("already sent", item.id)
         } else {
           console.log('pushing', raw.slice(0,30)+ "...")
+          console.log("is it printing 1?")
           try {
-            console.log("is it printing?")
+            console.log("is it printing 2?")
             let res = await axios.post(push_addr, JSON.parse(`{ "${tx_key}": "${raw}" }`), {headers:{'Content-Type': 'application/json'}})
+            console.log("is it printing 3?")
             console.log(`Push addr: ${push_addr}.\n    Response: ${JSON.stringify(res.data)} \n    Updating to sent: ${item.id}`)
             // Change to sent
             this.DB.prepare("UPDATE tx SET sent=1 WHERE id=?").run(item.id)
