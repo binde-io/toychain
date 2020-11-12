@@ -88,10 +88,10 @@ class Tx {
             this.DB.prepare("UPDATE tx SET sent=1 WHERE id=?").run(item.id)
             counter++;
           } catch (e) {
-            console.log("Error", e)
-            console.log(Object.keys(e))
-            console.log("Toychain: Error. Sent", counter)
-            throw(e);
+            console.log(`Error pushing transaction ${e.response.status}: ${e.response.data}`)
+            //e has the following keys:[ 'config', 'request', 'response', 'isAxiosError', 'toJSON' ]
+            //console.log("Toychain: Error. Sent", counter)
+            //throw(e);
             //process.exit();
           }
         }
